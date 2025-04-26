@@ -17,4 +17,7 @@
   .nav a:hover {
     text-decoration: underline;
   }
+  .nav button:hover {
+    opacity: 0.8;
+  }
   

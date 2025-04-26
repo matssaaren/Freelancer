@@ -1,34 +1,21 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './Login.css'
+import { useAuth } from '../context/AuthContext';
+import { useLocation } from 'react-router-dom';
+import './Login.css';
+
 function Login() {
-  const navigate = useNavigate(); // To redirect after login
+  const { login } = useAuth();
+  const location = useLocation();
+  const registered = location.state?.registered || false;
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
-      const res = await fetch('http://localhost:5000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || 'Login failed');
-
-      // Save token + user info
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
-
-      // Redirect to homepage or dashboard
-      navigate('/');
+      await login(email, password);
     } catch (err) {
       setError(err.message);
     }
@@ -37,6 +24,7 @@ function Login() {
   return (
     <div className="login-container">
       <h2>Login</h2>
+      {registered && <p style={{ color: 'green' }}>Account created successfully! Please log in.</p>}
       <form onSubmit={handleLogin} className="login-form">
         <label>Email</label>
         <input
@@ -58,10 +46,6 @@ function Login() {
 
         <button type="submit">Login</button>
       </form>
-      Don't? have an account?
-      <Link to='/register'>
-      Click Here
-      </Link>
     </div>
   );
 }
