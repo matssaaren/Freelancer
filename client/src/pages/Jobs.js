@@ -41,17 +41,17 @@ function Jobs() {
                 <h3>{post.title}</h3>
 
                 <div className="job-user-info">
-                <img
-                    src={
-                        post.avatar
-                        ? post.avatar.startsWith('http')
-                            ? post.avatar
-                            : `http://localhost:5000/${post.avatar}`
-                        : 'https://placehold.co/50x50/png'
-                    }
-                    alt="User Avatar"
-                    className="job-user-avatar"
-                />
+                  <img
+                      src={
+                          post.avatar
+                          ? post.avatar.startsWith('http')
+                              ? post.avatar
+                              : `http://localhost:5000/${post.avatar}`
+                          : 'https://placehold.co/50x50/png'
+                      }
+                      alt="User Avatar"
+                      className="job-user-avatar"
+                  />
 
 
                   <Link to={`/profile/${usernameURL}`} className="job-user-name">

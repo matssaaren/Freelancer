@@ -312,7 +312,15 @@ app.get('/posts/user/:username', async (req, res) => {
 
   try {
     const [rows] = await db.query(
-      `SELECT p.post_id, p.title, p.description, p.upload_date
+      `SELECT 
+        p.post_id,
+        p.user_id,
+        p.title,
+        p.description,
+        p.upload_date,
+        u.first_name,
+        u.last_name,
+        u.avatar
        FROM Posts p
        JOIN Users u ON p.user_id = u.id
        WHERE u.first_name = ? AND u.last_name = ?
@@ -334,6 +342,7 @@ app.get('/posts/:id', async (req, res) => {
     const [rows] = await db.query(
       `SELECT 
         p.post_id,
+        p.user_id,
         p.title,
         p.description,
         p.upload_date,
